@@ -15,5 +15,3 @@ This code was tested using MATLAB 2020b. In order to run the example.m code, fir
 
 3. splinepak: (download from author's personal webpage: https://archive.siam.org/books/ot142/)
 
-4. 
-
