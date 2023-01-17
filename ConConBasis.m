@@ -239,7 +239,7 @@ classdef ConConBasis < matlab.mixin.SetGet
                     M_k = Ainv' * P *(Ghat_s - alpha_1*R_xi_tilde) * P' * Ainv;
                     v0 = A*ctilde_k;
                     tic
-                    Vtrajectory = tpower(M_k, J_xi, v0, alpha_2, MAXITER_INNER, TOL_INNER);
+                    Vtrajectory = generalized_power(M_k, J_xi, v0, alpha_2, MAXITER_INNER, TOL_INNER);
                     times(k, i, 2) = toc;
                     ctilde_k = Ainv*Vtrajectory(:,end)/norm(Ainv*Vtrajectory(:,end));
                     c_k = Vtrajectory(:,end);
