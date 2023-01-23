@@ -28,7 +28,7 @@ classdef ConConSmooth < matlab.mixin.SetGet
             obj.reg_param = params.reg_param;
         end
         
-        function obj = smooth(obj,Y, X0, X1)
+        function obj = smooth(obj, Y, X0, X1)
             %smooth Compute continous representation from discrete
             %connectivity
             % Input:

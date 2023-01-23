@@ -28,7 +28,12 @@ classdef ConConBasis < matlab.mixin.SetGet
             obj.Basis1 = Basis1;
             
         end
-        
+        function obj = set.C0(obj,value)
+            obj.C0 = value;
+        end 
+        function obj = set.C1(obj,value)
+            obj.C1 = value;
+        end 
         function Psi = Evaluate(obj, X, ix)
             %Evaluate the ConCon object over a set of points
             %

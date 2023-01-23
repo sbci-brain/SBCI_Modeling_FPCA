@@ -265,7 +265,7 @@ classdef SplineBasis < matlab.mixin.SetGet
             end 
             obj.R = Rmat;
         end 
-       
+        
         function plot(obj)
             % plot plot the tesselation
             %
