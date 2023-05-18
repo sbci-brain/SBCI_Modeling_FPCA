@@ -28,7 +28,7 @@ classdef ConConSmooth < matlab.mixin.SetGet
             obj.reg_param = params.reg_param;
         end
         
-        function obj = smooth(obj, Y, X0, X1)
+        function [CMat] = smooth(obj, Y, X0, X1)
             %smooth Compute continous representation from discrete
             %connectivity
             % Input:
@@ -57,7 +57,7 @@ classdef ConConSmooth < matlab.mixin.SetGet
                 Y_i_vec = Y_i(tri_ix);
                 CMat(i,:) = lsqr(Psi_DM, Y_i_vec, 1e-10, 20);
             end
-            obj.CoefMat = CMat;
+            %obj.CoefMat = CMat;
         end     
     end
 end

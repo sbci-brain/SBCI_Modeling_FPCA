@@ -39,7 +39,7 @@ CCB.Fit(Y,X0,X1);
 
 %reprepent the data using the ConConBasis object
 CCR1 = ConConSmooth(CCB);
-CCR1.smooth(Y, X0, X1);
+Smat_scan1 = CCR1.smooth(Y, X0, X1);
 
 %load scan-2 data and represent with the CC-basis learned from scan-1
 load(fullfile('data', 'HCP_scan2.mat'))
@@ -53,11 +53,7 @@ end
 clear Y_scan_2
 
 CCR2 = ConConSmooth(CCB);
-CCR2.smooth(Y2, X0, X1);
-
-%compute LOOCV and plot pairwise distance matrix 
-Smat_scan1 = get(CCR1, 'CoefMat');
-Smat_scan2 = get(CCR2, 'CoefMat');
+Smat_scan2 = CCR2.smooth(Y2, X0, X1);
 
 norms_scan1 = vecnorm(Smat_scan1');
 norms_scan2 = vecnorm(Smat_scan2');
