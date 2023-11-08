@@ -109,6 +109,8 @@ classdef ConConBasis < matlab.mixin.SetGet
             %      varargin optional arguments
             %      alpha_1: (float) smoothness penalty
             %      alpha_2: (int) local support constraint 
+            %      auto_sparse: (boolean) automated clustering based
+            %      sparsity
             %      MAXITER_OUTER: (int) max # of outer loop iterations 
             %      MAXITER_INNER: (int) max # of inner loop iterations 
             %      TOL_OUTER: (float) tolerance for iteration termination
@@ -123,6 +125,7 @@ classdef ConConBasis < matlab.mixin.SetGet
             p = inputParser;
             addParameter(p, 'alpha_1', 1e-10, @isnumeric)
             addParameter(p, 'alpha_2', Inf, @isnumeric)
+            addParameter(p, 'auto_sparse', false, @isboolean)
             addParameter(p, 'MAXITER_OUTER', 30, @isnumeric)
             addParameter(p, 'MAXITER_INNER', 30, @isnumeric)
             addParameter(p, 'TOL_OUTER', 1e-3, @isnumeric)
@@ -253,6 +256,17 @@ classdef ConConBasis < matlab.mixin.SetGet
                 objective_function(k,i+1) = ctilde_k' * P *(Ghat_s - alpha_1*R_xi_tilde) * P' * ctilde_k;
                 delta_residual_norm = abs((objective_function(k,i+1) - objective_function(k,i))/objective_function(k,1));
                 i = i + 1;
+            end 
+            if auto_sparse
+                % add a single iteration sparse power iteration step w/
+                % auto determined sparsity parameter
+                [idx_k,centriod_k] = kmeans(abs(c_k), 2);
+                [min_k, mix_k] = min(centriod_k);
+                c_k(idx_k == mix_k) = 0;
+                % s-update 
+                ctilde_k = Ainv*c_k/norm(Ainv*c_k);
+                ghat_c = double(ttv(Ghat, ctilde_k, 1))'*ctilde_k;
+                s_k = ghat_c/norm(ghat_c);
             end 
             % Compute scale and deflate the residual tensor 
             gamma = ctilde_k'*double(ttv(Ghat, s_k, 3))*ctilde_k;
